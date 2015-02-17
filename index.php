@@ -104,3 +104,4 @@ $app->get( '/welcome/', $authenticate( $app ), function () use ( $app, $model ) 
 );
 
 $app->run();
+
