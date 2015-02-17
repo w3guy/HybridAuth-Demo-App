@@ -1,0 +1,10 @@
+{
+    "require": {
+        "slim/slim": "2.*",
+        "hybridauth/hybridauth": "dev-master"
+    },
+
+    "autoload": {
+        "psr-4": {"Model\\": "src/"}
+    }
+}
