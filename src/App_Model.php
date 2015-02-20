@@ -1,7 +1,6 @@
 <?php
 namespace Model;
 
-
 class App_Model {
 
 	/** @var object Database connection */
@@ -9,15 +8,16 @@ class App_Model {
 
 	/**
 	 * Instantiate the model class.
-	 * @param $db_connection object DB connection
+	 *
+	 * @param object $db_connection DB connection
 	 */
-	public function __construct($db_connection) {
+	public function __construct( $db_connection ) {
 
 		$this->conn = $db_connection;
 	}
 
 	/**
-	 * Check if an HybridAuth identifier already exist in DB
+	 * Check if a HybridAuth identifier already exist in DB
 	 *
 	 * @param $identifier
 	 *
@@ -27,19 +27,28 @@ class App_Model {
 		try {
 			$sql    = 'SELECT identifier FROM users';
 			$query  = $this->conn->query( $sql );
-			$result = $query->fetchAll(\PDO::FETCH_COLUMN, 0);
+			$result = $query->fetchAll( \PDO::FETCH_COLUMN, 0 );
 
 			return in_array( $identifier, $result );
-		}
+		} catch ( \PDOException $e ) {
 
-		catch (\PDOException $e){
-
-			die($e->getMessage());
+			die( $e->getMessage() );
 		}
 
 	}
 
-	public function register_user($identifier, $email, $first_name, $last_name, $avatar_url) {
+	/**
+	 * Save users record to the database.
+	 *
+	 * @param string $identifier user's unique identifier
+	 * @param string $email
+	 * @param $first_name
+	 * @param $last_name
+	 * @param $avatar_url
+	 *
+	 * @return bool
+	 */
+	public function register_user( $identifier, $email, $first_name, $last_name, $avatar_url ) {
 
 		try {
 			$sql = "INSERT INTO users (identifier, email, first_name, last_name, avatar_url) VALUES (:identifier, :email, :first_name, :last_name, :avatar_url)";
@@ -52,46 +61,94 @@ class App_Model {
 			$query->bindValue( ':avatar_url', $avatar_url );
 
 			return $query->execute();
-		}
-
-		catch (\PDOException $e) {
+		} catch ( \PDOException $e ) {
 			return $e->getMessage();
 		}
 	}
 
-	public function login_user($identifier) {
-		\Hybrid_Auth::storage()->set('user', $identifier);
+
+	/**
+	 * Create user login session
+	 *
+	 * @param $identifier
+	 */
+	public function login_user( $identifier ) {
+		\Hybrid_Auth::storage()->set( 'user', $identifier );
 	}
 
+
+	/** Destroy user login session */
 	public function logout_user() {
-		\Hybrid_Auth::storage()->set('user', null);
+		\Hybrid_Auth::storage()->set( 'user', null );
 	}
 
-	public function getFirstName($identifier) {
-		if(!isset($identifier) ) return;
-		$query = $this->conn->query("SELECT first_name FROM users WHERE identifier = $identifier");
-		$result = $query->fetch(\PDO::FETCH_NUM);
+	/**
+	 * Return user's first name.
+	 *
+	 * @param $identifier
+	 *
+	 * @return string
+	 */
+	public function getFirstName( $identifier ) {
+		if ( ! isset( $identifier ) ) {
+			return;
+		}
+		$query  = $this->conn->query( "SELECT first_name FROM users WHERE identifier = $identifier" );
+		$result = $query->fetch( \PDO::FETCH_NUM );
+
 		return $result[0];
 	}
 
-	public function getLastName($identifier) {
-		if(!isset($identifier) ) return;
-		$query = $this->conn->query("SELECT last_name FROM users WHERE identifier = $identifier");
-		$result = $query->fetch(\PDO::FETCH_NUM);
+
+	/**
+	 * Return user's last name.
+	 *
+	 * @param $identifier
+	 *
+	 * @return mixed
+	 */
+	public function getLastName( $identifier ) {
+		if ( ! isset( $identifier ) ) {
+			return;
+		}
+		$query  = $this->conn->query( "SELECT last_name FROM users WHERE identifier = $identifier" );
+		$result = $query->fetch( \PDO::FETCH_NUM );
+
 		return $result[0];
 	}
 
-	public function getEmail($identifier) {
-		if(!isset($identifier) ) return;
-		$query = $this->conn->query("SELECT email FROM users WHERE identifier = $identifier");
-		$result = $query->fetch(\PDO::FETCH_NUM);
+	/**
+	 * Return user's email address
+	 *
+	 * @param $identifier
+	 *
+	 * @return mixed
+	 */
+	public function getEmail( $identifier ) {
+		if ( ! isset( $identifier ) ) {
+			return;
+		}
+		$query  = $this->conn->query( "SELECT email FROM users WHERE identifier = $identifier" );
+		$result = $query->fetch( \PDO::FETCH_NUM );
+
 		return $result[0];
 	}
 
-	public function getAvatarUrl($identifier) {
-		if(!isset($identifier) ) return;
-		$query = $this->conn->query("SELECT avatar_url FROM users WHERE identifier = $identifier");
-		$result = $query->fetch(\PDO::FETCH_NUM);
+
+	/**
+	 * Return the URL of user's avatar
+	 *
+	 * @param $identifier
+	 *
+	 * @return mixed
+	 */
+	public function getAvatarUrl( $identifier ) {
+		if ( ! isset( $identifier ) ) {
+			return;
+		}
+		$query  = $this->conn->query( "SELECT avatar_url FROM users WHERE identifier = $identifier" );
+		$result = $query->fetch( \PDO::FETCH_NUM );
+
 		return $result[0];
 	}
 

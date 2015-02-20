@@ -22,10 +22,11 @@ $app->container->singleton( 'db', function () {
 	}
 );
 
-$app->container->singleton('hybridInstance', function () {
+$app->container->singleton( 'hybridInstance', function () {
 	$instance = new Hybrid_Auth( 'config.php' );
+
 	return $instance;
-});
+} );
 
 
 $model = new \Model\App_Model( $app->db );
@@ -36,7 +37,7 @@ $authenticate = function ( $app ) {
 		$app->hybridInstance;
 		$session_identifier = Hybrid_Auth::storage()->get( 'user' );
 
-		if ( is_null($session_identifier) && $app->request()->getPathInfo() != '/login/' ) {
+		if ( is_null( $session_identifier ) && $app->request()->getPathInfo() != '/login/' ) {
 			$app->redirect( '/login/' );
 		}
 
@@ -94,12 +95,12 @@ $app->get( '/logout/', function () use ( $app, $model ) {
 		$app->hybridInstance;
 		$model->logout_user();
 		Hybrid_Auth::logoutAllProviders();
-		$app->redirect('/login/');
+		$app->redirect( '/login/' );
 	}
 );
 
 $app->get( '/welcome/', $authenticate( $app ), function () use ( $app, $model ) {
-		$app->render( 'welcome.php', ['model' => $model] );
+		$app->render( 'welcome.php', [ 'model' => $model ] );
 	}
 );
 
