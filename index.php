@@ -4,9 +4,9 @@ require 'vendor/autoload.php';
 $app = new \Slim\Slim();
 
 $app->config(
-    array(
+    [
         'templates.path' => 'templates'
-    )
+    ]
 );
 
 
@@ -14,7 +14,7 @@ $app->config(
 $app->container->singleton( 'db', function () {
         try {
             $db = new PDO( 'mysql:host=localhost;dbname=hybridauth', 'slim', 'slim',
-                array( \PDO::ATTR_PERSISTENT => false ) );
+                [ \PDO::ATTR_PERSISTENT => false ] );
         } catch ( PDOException $e ) {
             die( "Error!: " . $e->getMessage() );
         }

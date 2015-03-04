@@ -10,35 +10,35 @@
 // ----------------------------------------------------------------------------------------
 
 return
-    array(
+    [
         "base_url"   => "http://slim.local/hybrid.php",
-        "providers"  => array(
-            "Google"   => array(
+        "providers"  => [
+            "Google"   => [
                 "enabled" => true,
-                "keys"    => array( "id" => "", "secret" => "" ),
-            ),
-            "Facebook" => array(
+                "keys"    => [ "id" => "", "secret" => "" ],
+            ],
+            "Facebook" => [
                 "enabled"        => true,
-                "keys"           => array( "id" => "", "secret" => "" ),
+                "keys"           => [ "id" => "", "secret" => "" ],
                 "trustForwarded" => false
-            ),
-            "Twitter"  => array(
+            ],
+            "Twitter"  => [
                 "enabled" => true,
-                "keys"    => array( "key" => "", "secret" => "" )
-            ),
-            "LinkedIn" => array(
+                "keys"    => [ "key" => "", "secret" => "" ]
+            ],
+            "LinkedIn" => [
                 "enabled" => true,
-                "keys"    => array( "key" => "", "secret" => "" )
-            ),
+                "keys"    => [ "key" => "", "secret" => "" ]
+            ],
             "Github"   => array(
                 "enabled" => true,
                 "keys"    => array(
                     "id"     => "7fc2a3116c86b9dac673",
                     "secret" => "1a3a1ba0c158a3e0cd1538b4f3c36fd6e6c10556"
                 ),
-                "wrapper" => array( "path" => "providers/GitHub.php", "class" => "Hybrid_Providers_GitHub" )
+                "wrapper" => [ "path" => "providers/GitHub.php", "class" => "Hybrid_Providers_GitHub" ]
             ),
-        ),
+        ],
         // If you want to enable logging, set 'debug_mode' to true.
         // You can also set it to
         // - "error" To log only error messages. Useful in production
@@ -46,4 +46,4 @@ return
         "debug_mode" => true,
         // Path to file writable by the web server. Required if 'debug_mode' is not false
         "debug_file" => "bug.txt",
-    );
+    ];
