@@ -16,7 +16,7 @@ $app->container->singleton( 'db', function () {
             $db = new PDO( 'mysql:host=localhost;dbname=hybridauth', 'slim', 'slim',
                 [ \PDO::ATTR_PERSISTENT => false ] );
         } catch ( PDOException $e ) {
-            die( "Error!: " . $e->getMessage() );
+            die( 'Error!: ' . $e->getMessage() );
         }
 
         return $db;
@@ -24,7 +24,7 @@ $app->container->singleton( 'db', function () {
 );
 
 $app->container->singleton( 'hybridInstance', function () {
-    $instance = new Hybrid_Auth( 'config.php' );
+    $instance = new Hybrid_Auth('config.php');
 
     return $instance;
 } );

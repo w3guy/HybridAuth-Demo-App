@@ -12,9 +12,7 @@ class App_Model
      *
      * @param object $db_connection DB connection
      */
-
-
-    public function __construct( \PDO $db_connection )
+    public function __construct(\PDO $db_connection)
     {
         $this->conn = $db_connection;
     }
@@ -26,18 +24,19 @@ class App_Model
      *
      * @return bool
      */
-    public function identifier_exists( $identifier )
+    public function identifier_exists($identifier)
     {
         try {
             $sql    = 'SELECT identifier FROM users';
-            $query  = $this->conn->query( $sql );
-            $result = $query->fetchAll( \PDO::FETCH_COLUMN, 0 );
+            $query  = $this->conn->query($sql);
+            $result = $query->fetchAll(\PDO::FETCH_COLUMN, 0);
 
-            return in_array( $identifier, $result );
+            return in_array($identifier, $result);
         } catch ( \PDOException $e ) {
 
             die( $e->getMessage() );
         }
+
     }
 
 
@@ -54,21 +53,21 @@ class App_Model
      */
     public function register_user( $identifier, $email, $first_name, $last_name, $avatar_url )
     {
-
         try {
             $sql = "INSERT INTO users (identifier, email, first_name, last_name, avatar_url) VALUES (:identifier, :email, :first_name, :last_name, :avatar_url)";
 
-            $query = $this->conn->prepare( $sql );
-            $query->bindValue( ':identifier', $identifier );
-            $query->bindValue( ':email', $email );
-            $query->bindValue( ':first_name', $first_name );
-            $query->bindValue( ':last_name', $last_name );
-            $query->bindValue( ':avatar_url', $avatar_url );
+            $query = $this->conn->prepare($sql);
+            $query->bindValue(':identifier', $identifier);
+            $query->bindValue(':email', $email);
+            $query->bindValue(':first_name', $first_name);
+            $query->bindValue(':last_name', $last_name);
+            $query->bindValue(':avatar_url', $avatar_url);
 
             return $query->execute();
-        } catch ( \PDOException $e ) {
+        } catch (\PDOException $e) {
             return $e->getMessage();
         }
+
     }
 
 
@@ -77,9 +76,9 @@ class App_Model
      *
      * @param int $identifier
      */
-    public function login_user( $identifier )
+    public function login_user($identifier)
     {
-        \Hybrid_Auth::storage()->set( 'user', $identifier );
+        \Hybrid_Auth::storage()->set('user', $identifier);
     }
 
 
