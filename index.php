@@ -36,7 +36,7 @@ $model = new \Model\App_Model( $app->db );
 $authenticate = function ( $app ) {
     return function () use ( $app ) {
         $app->hybridInstance;
-        $session_identifier = Hybrid_Auth::storage()->get( 'user' );
+        $session_identifier = Hybrid_Auth::storage()->get('user');
 
         if (is_null( $session_identifier ) && $app->request()->getPathInfo() != '/login/') {
             $app->redirect( '/login/' );
@@ -45,7 +45,7 @@ $authenticate = function ( $app ) {
 };
 
 
-$app->get( '/', $authenticate( $app ) );
+$app->get( '/', $authenticate($app) );
 
 
 $app->get( '/login/', $authenticate( $app ), function () use ( $app ) {
