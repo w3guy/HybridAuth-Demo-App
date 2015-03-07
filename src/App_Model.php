@@ -12,20 +12,21 @@ class App_Model
      *
      * @param object $db_connection DB connection
      */
+
+
     public function __construct( \PDO $db_connection )
     {
-
         $this->conn = $db_connection;
     }
 
     /**
      * Check if a HybridAuth identifier already exist in DB
      *
-     * @param $identifier
+     * @param int $identifier
      *
      * @return bool
      */
-    public function identifier_exist( $identifier )
+    public function identifier_exists( $identifier )
     {
         try {
             $sql    = 'SELECT identifier FROM users';
@@ -37,17 +38,17 @@ class App_Model
 
             die( $e->getMessage() );
         }
-
     }
+
 
     /**
      * Save users record to the database.
      *
      * @param string $identifier user's unique identifier
      * @param string $email
-     * @param $first_name
-     * @param $last_name
-     * @param $avatar_url
+     * @param string $first_name
+     * @param string $last_name
+     * @param string $avatar_url
      *
      * @return bool
      */
@@ -74,7 +75,7 @@ class App_Model
     /**
      * Create user login session
      *
-     * @param $identifier
+     * @param int $identifier
      */
     public function login_user( $identifier )
     {
@@ -91,7 +92,7 @@ class App_Model
     /**
      * Return user's first name.
      *
-     * @param $identifier
+     * @param int $identifier
      *
      * @return string
      */
@@ -100,7 +101,9 @@ class App_Model
         if ( ! isset( $identifier )) {
             return;
         }
-        $query  = $this->conn->query( "SELECT first_name FROM users WHERE identifier = $identifier" );
+        $query = $this->conn->prepare( "SELECT first_name FROM users WHERE identifier = :identifier" );
+        $query->bindParam( ':identifier', $identifier );
+        $query->execute();
         $result = $query->fetch( \PDO::FETCH_NUM );
 
         return $result[0];
@@ -110,7 +113,7 @@ class App_Model
     /**
      * Return user's last name.
      *
-     * @param $identifier
+     * @param int $identifier
      *
      * @return string
      */
@@ -119,7 +122,9 @@ class App_Model
         if ( ! isset( $identifier )) {
             return;
         }
-        $query  = $this->conn->query( "SELECT last_name FROM users WHERE identifier = $identifier" );
+        $query = $this->conn->prepare( "SELECT last_name FROM users WHERE identifier = :identifier" );
+        $query->bindParam( ':identifier', $identifier );
+        $query->execute();
         $result = $query->fetch( \PDO::FETCH_NUM );
 
         return $result[0];
@@ -128,7 +133,7 @@ class App_Model
     /**
      * Return user's email address
      *
-     * @param $identifier
+     * @param int $identifier
      *
      * @return string
      */
@@ -137,7 +142,9 @@ class App_Model
         if ( ! isset( $identifier )) {
             return;
         }
-        $query  = $this->conn->query( "SELECT email FROM users WHERE identifier = $identifier" );
+        $query = $this->conn->prepare( "SELECT email FROM users WHERE identifier = :identifier" );
+        $query->bindParam( ':identifier', $identifier );
+        $query->execute();
         $result = $query->fetch( \PDO::FETCH_NUM );
 
         return $result[0];
@@ -147,7 +154,7 @@ class App_Model
     /**
      * Return the URL of user's avatar
      *
-     * @param $identifier
+     * @param int $identifier
      *
      * @return string
      */
@@ -156,7 +163,9 @@ class App_Model
         if ( ! isset( $identifier )) {
             return;
         }
-        $query  = $this->conn->query( "SELECT avatar_url FROM users WHERE identifier = $identifier" );
+        $query = $this->conn->prepare( "SELECT avatar_url FROM users WHERE identifier = :identifier" );
+        $query->bindParam( ':identifier', $identifier );
+        $query->execute();
         $result = $query->fetch( \PDO::FETCH_NUM );
 
         return $result[0];

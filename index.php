@@ -41,7 +41,6 @@ $authenticate = function ( $app ) {
         if (is_null( $session_identifier ) && $app->request()->getPathInfo() != '/login/') {
             $app->redirect( '/login/' );
         }
-
     };
 };
 
@@ -61,12 +60,12 @@ $app->get( '/login/:idp', function ( $idp ) use ( $app, $model ) {
             $user_profile = $adapter->getUserProfile();
 
             if (empty( $user_profile )) {
-                $app->redirect( '/welcome/?' . rawurlencode( 'Authentication failed. Please try again' ) );
+                echo 'Authentication failed. Please try again';
             }
 
             $identifier = $user_profile->identifier;
 
-            if ($model->identifier_exist( $identifier )) {
+            if ($model->identifier_exists( $identifier )) {
                 $model->login_user( $identifier );
                 $app->redirect( '/welcome/' );
             } else {
