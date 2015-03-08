@@ -60,7 +60,7 @@ $app->get( '/login/:idp', function ( $idp ) use ( $app, $model ) {
             $user_profile = $adapter->getUserProfile();
 
             if (empty( $user_profile )) {
-                echo 'Authentication failed. Please try again';
+                $app->redirect( '/login/?err=1' );
             }
 
             $identifier = $user_profile->identifier;

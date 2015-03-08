@@ -9,6 +9,10 @@ $identifier_session = !empty( Hybrid_Auth::storage() ) ? Hybrid_Auth::storage()-
 if (isset( $identifier_session ) && ! empty( $identifier_session )) {
 	echo '<a href="/welcome">Return to Control Panel</a>';
 }
+
+if(isset($_GET['err']) && !empty($_GET['err'])) {
+    echo '<div>Authentication failed. Please try again</div>';
+}
 ?>
 
 
