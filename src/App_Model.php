@@ -18,7 +18,7 @@ class App_Model
     }
 
     /**
-     * Check if a HybridAuth identifier already exist in DB
+     * Check if a HybridAuth identifier already exists in DB
      *
      * @param int $identifier
      *
